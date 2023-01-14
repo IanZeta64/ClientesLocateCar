@@ -1,4 +1,4 @@
-package br.com.ada.LocateCar;
+package br.com.ada.projeto.locadoraveiculos;
 
 import java.math.BigDecimal;
 import java.util.InputMismatchException;

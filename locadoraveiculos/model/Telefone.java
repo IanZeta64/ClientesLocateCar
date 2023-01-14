@@ -1,4 +1,4 @@
-package br.com.ada.LocateCar.Clientes;
+package br.com.ada.projeto.locadoraveiculos.model;
 
 import java.util.Objects;
 

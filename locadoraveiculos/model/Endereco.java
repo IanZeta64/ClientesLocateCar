@@ -1,10 +1,10 @@
-package br.com.ada.LocateCar.Clientes;
+package br.com.ada.projeto.locadoraveiculos.model;
 
 import java.util.Objects;
 
 public class Endereco {
 
-//    private TipoEndereco tipo;
+    //    private TipoEndereco tipo;
     private String logradouro;
     private String bairro;
     private String cep;
