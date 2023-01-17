@@ -67,6 +67,7 @@ public class Cliente implements Entidade {
         return "Cliente{" +
                 "nome='" + nome + '\'' +
                 ", documento='" + documento + '\'' +
+                ", tipoCliente=" + tipoCliente +
                 '}';
     }
 }

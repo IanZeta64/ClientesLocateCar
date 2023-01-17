@@ -1,42 +1,81 @@
 package br.com.ada.projeto.locadoraveiculos.view;
-import br.com.ada.projeto.locadoraveiculos.ConsoleUIHelper;
 import br.com.ada.projeto.locadoraveiculos.model.Cliente;
+import br.com.ada.projeto.locadoraveiculos.persistence.ClienteController;
 import br.com.ada.projeto.locadoraveiculos.persistence.ClienteEmMemoriaRepository;
-import java.util.Scanner;
-public class ClientesMenu {
 
-    public void menuClientes(Scanner sc) {
+public class ClientesMenu {
+    Mensagens mensagens = new Mensagens();
+    public void menuClientes() {
         ClienteEmMemoriaRepository cr = new ClienteEmMemoriaRepository();
         boolean flag = false;
         do {
-            ConsoleUIHelper.drawHeader("MENU CLIENTES", 100);
-           String menu =  Integer.toString(ConsoleUIHelper.askChooseOption("Escolha um numero do indice:",
-                   "Cadastrar novo cliente", "Buscar cliente por documento", "Buscar cliente por nome", "Alterar cliente", "Remover cliente"));
+            boolean continuar;
+            String id;
+            int listaSize = cr.getEntidades().size();
+           String menu =  Integer.toString(mensagens.menuClientes());
             switch (menu) {
                 case "1":
-                   Cliente cliente = cr.cadastrarCliente(ConsoleUIHelper.askConfirm("Deseja cadastrar mais informações do cliente?",
-                           "Sim", "Não"));
-                    cr.salvar(cliente);
+                    do {
+                        cr.salvar(ClienteController.cadastrarCliente(mensagens.tipoCadastro()));
+                        if (listaSize == cr.getEntidades().size()) {
+                            System.out.println(mensagens.falhaOperacao());
+                        } else System.out.println(mensagens.operacaoSucesso());
+                        continuar = mensagens.desejaContinuar();
+                    }while (continuar);
                     break;
+
                 case "2":
-                    String id = ConsoleUIHelper.askSimpleInput("Digite o documento do cliente: ");
-                    System.out.println(cr.buscarPeloId(id));break;
+                    do{
+                    if (!cr.getEntidades().isEmpty()) {
+                        id = mensagens.documento();
+                        try{
+                            cr.buscarPeloId(id);
+                        }catch(NullPointerException e){
+                            System.out.println(mensagens.falhaOperacao());
+                        }
+                    } else System.out.println(mensagens.listaVazia());
+                    continuar = mensagens.desejaContinuar();
+            }while (continuar);
+                    break;
+
                 case "3":
-                    System.out.println(cr.buscarPeloNome(ConsoleUIHelper.askSimpleInput("Digite o nome ou parte do nome para fazer a busca:")));break;//trocar
+                    do{
+                    if (!cr.getEntidades().isEmpty()) {
+                        cr.buscarPeloNome(mensagens.nome()).forEach(System.out::println);
+                    } else System.out.println(mensagens.listaVazia());
+                    continuar = mensagens.desejaContinuar();
+                    }while (continuar);
+                    break;
 
                 case "4":
-                    id = ConsoleUIHelper.askSimpleInput("Digite o documento do cliente: ");
-                    cr.alterarCliente(id);break;
+                    do{
+                    if (!cr.getEntidades().isEmpty()) {
+                        id = mensagens.documento();
+                        Cliente cliente = cr.getEntidades().get(id);
+                        cr.salvar(ClienteController.alterarCliente(cliente));
+                        System.out.println(mensagens.operacaoSucesso());
+                    } else System.out.println(mensagens.listaVazia());
+                    continuar = mensagens.desejaContinuar();
+                    }while (continuar);
+                    break;
 
                 case "5":
-                    id = ConsoleUIHelper.askSimpleInput("Digite o documento do cliente: ");
-                    Cliente cl = cr.buscarPeloId(id);
-                    cr.remover(cl);break;
-
+                    do {
+                    if (!cr.getEntidades().isEmpty()) {
+                        id = mensagens.documento();
+                        Cliente cl = cr.buscarPeloId(id);
+                        cr.remover(cl);
+                        if (listaSize > cr.getEntidades().size()) System.out.println(mensagens.operacaoSucesso());
+                        else System.out.println(mensagens.falhaOperacao());
+                    } else System.out.println(mensagens.listaVazia());
+                    continuar = mensagens.desejaContinuar();
+                    }while (continuar);
+                    break;
                 case "6":
-                    flag = true; break;
+                    flag = mensagens.desejaSair();break;
                 default:
-                    System.out.println("erro");
+                    System.out.println(mensagens.valorInvalido());break;
+
             }
         } while (!flag);
     }

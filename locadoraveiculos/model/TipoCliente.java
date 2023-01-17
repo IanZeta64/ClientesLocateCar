@@ -17,11 +17,5 @@ public class TipoCliente {
     }
 
     @Override
-    public String toString() {
-        return "TipoCliente{" +
-                "descricao='" + descricao + '\'' +
-                ", desconto=" + desconto +
-                ", quantidadeDiasParaDesconto=" + quantidadeDiasParaDesconto +
-                '}';
-    }
+    public String toString() {return "TipoCliente{" + descricao + '\'' + '}';}
 }
