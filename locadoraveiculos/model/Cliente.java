@@ -14,6 +14,9 @@ public class Cliente implements Entidade {
 
     private TipoCliente tipoCliente;
 
+    public Cliente() {
+    }
+
     public Cliente(String nome, String documento, TipoCliente tipoCliente) {
         this.nome = nome;
         this.documento = documento;
@@ -23,7 +26,7 @@ public class Cliente implements Entidade {
     public Cliente(String nome, String documento, TipoCliente tipoCliente, String email, Endereco endenreco, Telefone telefone) {
         this.nome = nome;
         this.documento = documento;
-            this.tipoCliente = tipoCliente;
+        this.tipoCliente = tipoCliente;
         this.email = email;
         this.endenreco = endenreco;
         this.telefone = telefone;
@@ -60,6 +63,10 @@ public class Cliente implements Entidade {
 
     public void setDocumento(String documento) {
         this.documento = documento;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     @Override

@@ -70,7 +70,7 @@ public class Mensagens {
                 "Cadastrar novo cliente", "Buscar cliente por documento", "Buscar cliente por nome",
                 "Alterar cliente", "Remover cliente", "Sair do menu de clientes");
     }
-    public void tipoMenu(String tipoMenu){
-        ConsoleUIHelper.drawHeader(tipoMenu, 100);
+    public void headerMenuClientes(){
+        ConsoleUIHelper.drawHeader("MENU CLIENTES", 100);
     }
 }
